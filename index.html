@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Portfolio - Palchikova</title>
+    <meta name="description" content="Портфоліо AI-автоматизацій: Make.com, OpenAI, Telegram Bots, Voiceflow">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f0e8 0%, #e8d5b7 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(4, 120, 87, 0.15);
+            text-align: center;
+        }
+
+        h1 {
+            color: #047857;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: linear-gradient(135deg, #047857, #065f46);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(4, 120, 87, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #047857;
+            color: #047857;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #047857;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(4, 120, 87, 0.3);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(4, 120, 87, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(4, 120, 87, 0.2);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, #047857, #065f46);
+            color: white;
+            padding: 20px;
+        }
+
+        .project-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .project-category {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .project-body {
+            padding: 20px;
+        }
+
+        .project-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tech-tag {
+            background: #d1fae5;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            color: #065f46;
+            font-weight: 600;
+        }
+
+        .project-benefits {
+            background: #f5f0e8;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #047857;
+        }
+
+        .benefit-item {
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .benefit-item:before {
+            content: "✓ ";
+            color: #047857;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .benefit-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .complexity {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .complexity-basic {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .complexity-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .complexity-advanced {
+            background: #fed7aa;
+            color: #9a3412;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 1000px;
+            margin: 50px auto;
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2em;
+            cursor: pointer;
+            color: #999;
+            z-index: 10;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #047857;
+        }
+
+        .modal-image {
+            width: 100%;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 5px 20px rgba(4, 120, 87, 0.15);
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(4, 120, 87, 0.1);
+        }
+
+        footer h3 {
+            color: #047857;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            color: #666;
+            margin-top: 15px;
+            line-height: 1.8;
+        }
+
+        .accent-text {
+            color: #d97706;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .modal-content {
+                padding: 20px;
+                margin: 20px auto;
+            }
+
+            .modal-close {
+                top: 10px;
+                right: 15px;
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌿 Портфоліо AI-автоматизацій</h1>
+            <p class="subtitle">Make.com • AI • Chatbots • Integrations</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">18</div>
+                    <div class="stat-label">Проєктів</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Інтеграцій</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">AI-проєктів</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">Всі проєкти</button>
+            <button class="filter-btn" data-filter="ai">AI & OpenAI</button>
+            <button class="filter-btn" data-filter="bot">Чат-боти</button>
+            <button class="filter-btn" data-filter="crm">CRM & HR</button>
+            <button class="filter-btn" data-filter="social">Соцмережі</button>
+            <button class="filter-btn" data-filter="business">Бізнес-процеси</button>
+        </div>
+
+        <div class="projects-grid" id="projectsGrid"></div>
+
+        <footer>
+            <h3>✨ Готова допомогти з вашою автоматизацією!</h3>
+            <p class="contact-info">
+                <span class="accent-text">Універсальний спеціаліст</span> з AI-автоматизації<br>
+                Make.com • OpenAI • Telegram Bots • Voiceflow • ManyChat<br>
+                Від ідеї до реалізації 🚀
+            </p>
+        </footer>
+    </div>
+
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const projects = [
+            {
+                id: 1,
+                title: "Сільськогосподарський моніторинг погоди",
+                category: "Бізнес-процеси",
+                categories: ["business"],
+                description: "Автоматичний збір погодних даних з розподілом інформації по різних таблицях для аналізу впливу на врожайність",
+                tech: ["Weather API", "Google Sheets", "Router"],
+                complexity: "medium",
+                benefits: [
+                    "Щоденний автоматичний збір даних погоди",
+                    "Розподіл даних по категоріях через Router",
+                    "Аналіз впливу погоди на сільгосп операції"
+                ],
+                image: "images/screenshot1.png"
+            },
+            {
+                id: 2,
+                title: "Автоматичне створення договорів",
+                category: "Документообіг",
+                categories: ["business"],
+                description: "Система автоматичної генерації договорів з шаблону при додаванні нового клієнта в Google Sheets",
+                tech: ["Google Sheets", "Google Docs", "Templates"],
+                complexity: "basic",
+                benefits: [
+                    "Економія часу на створенні документів",
+                    "Автоматичне заповнення з бази даних",
+                    "Виключення людських помилок"
+                ],
+                image: "images/screenshot2.png"
+            },
+            {
+                id: 3,
+                title: "Автоматизація email-розсилок замовлень",
+                category: "Email-маркетинг",
+                categories: ["business"],
+                description: "Розумна система розсилки різних типів листів клієнтам залежно від статусу замовлення через Router",
+                tech: ["Google Sheets", "Gmail", "Router"],
+                complexity: "medium",
+                benefits: [
+                    "Персоналізовані листи для кожного статусу",
+                    "Автоматична сегментація клієнтів",
+                    "Відправка 4+ різних типів повідомлень"
+                ],
+                image: "images/screenshot3.png"
+            },
+            {
+                id: 4,
+                title: "Щотижнева розсилка подій",
+                category: "Комунікації",
+                categories: ["business"],
+                description: "Автоматична збірка подій з Google Calendar та відправка дайджесту на email",
+                tech: ["Google Calendar", "Tools", "Gmail"],
+                complexity: "basic",
+                benefits: [
+                    "Автоматичний дайджест подій тижня",
+                    "Форматування списку подій",
+                    "Нагадування для команди"
+                ],
+                image: "images/screenshot4.png"
+            },
+            {
+                id: 5,
+                title: "HR: Анкетування співробітників",
+                category: "HR & Рекрутинг",
+                categories: ["crm"],
+                description: "Комплексна система від анкети кандидата до створення зустрічі та відправки листа-підтвердження",
+                tech: ["Google Forms", "Google Drive", "Google Docs", "Google Sheets", "Calendar", "Gmail"],
+                complexity: "advanced",
+                benefits: [
+                    "Повна автоматизація HR-процесу",
+                    "Створення папок для кожного кандидата",
+                    "Автоматичні документи та календарні події",
+                    "Email-нотифікації для всіх учасників"
+                ],
+                image: "images/screenshot5.png"
+            },
+            {
+                id: 6,
+                title: "AI-аналіз резюме та ключові слова",
+                category: "AI & HR",
+                categories: ["ai", "crm"],
+                description: "Використання OpenAI для аналізу резюме та автоматичного виділення ключових навичок і компетенцій",
+                tech: ["Google Sheets", "OpenAI GPT", "Text Analysis"],
+                complexity: "advanced",
+                benefits: [
+                    "Швидкий скринінг резюме через AI",
+                    "Автоматичне виділення ключових слів",
+                    "Збереження аналізу в таблиці"
+                ],
+                image: "images/screenshot6.png"
+            },
+            {
+                id: 7,
+                title: "Відгуки ресторанів з AI-аналізом",
+                category: "Моніторинг & AI",
+                categories: ["ai", "business"],
+                description: "Збір відгуків про ресторан, аналіз через OpenAI та відправка звітів у Slack",
+                tech: ["Google Sheets", "Iterator", "HTTP", "OpenAI", "Slack"],
+                complexity: "advanced",
+                benefits: [
+                    "Автоматичний збір відгуків",
+                    "AI-аналіз тональності та проблем",
+                    "Миттєві повідомлення в Slack",
+                    "Ітерація через список відгуків"
+                ],
+                image: "images/screenshot7.png"
+            },
+            {
+                id: 8,
+                title: "Google Maps: Розрахунок відстані маршруту",
+                category: "Логістика",
+                categories: ["business"],
+                description: "Автоматичний розрахунок відстаней між точками для оптимізації доставки",
+                tech: ["Google Sheets", "Google Maps API"],
+                complexity: "basic",
+                benefits: [
+                    "Автоматичний розрахунок км",
+                    "Планування маршрутів доставки",
+                    "Оптимізація логістичних витрат"
+                ],
+                image: "images/screenshot8.png"
+            },
+            {
+                id: 9,
+                title: "RSS-моніторинг новин з AI",
+                category: "Контент & AI",
+                categories: ["ai", "business"],
+                description: "Відстеження RSS-стрічок, обробка через OpenAI та збереження важливих новин у Google Sheets",
+                tech: ["RSS", "HTTP", "OpenAI", "Google Sheets"],
+                complexity: "medium",
+                benefits: [
+                    "Моніторинг новин в реальному часі",
+                    "AI-фільтрація релевантного контенту",
+                    "Автоматичне збереження в базу"
+                ],
+                image: "images/screenshot9.png"
+            },
+            {
+                id: 10,
+                title: "AI Auto-Reply для Email",
+                category: "AI Email-асистент",
+                categories: ["ai"],
+                description: "Інтелектуальні автовідповіді на вхідні email через OpenAI з аналізом контексту",
+                tech: ["Gmail", "Google Sheets", "OpenAI", "NLP"],
+                complexity: "advanced",
+                benefits: [
+                    "Розумні відповіді на основі контексту",
+                    "Перевірка чи було замовлення в БД",
+                    "Формування персоналізованих відповідей"
+                ],
+                image: "images/screenshot10.png"
+            },
+            {
+                id: 11,
+                title: "Palchiks Finance Bot (Telegram)",
+                category: "Фінансовий бот",
+                categories: ["bot"],
+                description: "Складний Telegram-бот для управління особистими фінансами з AI-аналітикою та множинними інтеграціями",
+                tech: ["Telegram", "OpenAI", "Google Sheets", "Router", "Multiple APIs"],
+                complexity: "advanced",
+                benefits: [
+                    "Трекінг доходів та витрат",
+                    "AI-рекомендації по бюджету",
+                    "Множинні гілки сценаріїв",
+                    "Інтеграція з банківськими API"
+                ],
+                image: "images/screenshot11.png"
+            },
+            {
+                id: 12,
+                title: "Instagram: Автовідповідь на коментарі",
+                category: "SMM автоматизація",
+                categories: ["social"],
+                description: "Автоматична система відповідей на коментарі в Instagram з розумним розподілом через Router",
+                tech: ["Instagram API", "Router", "Keywords Detection"],
+                complexity: "medium",
+                benefits: [
+                    "Миттєві відповіді на коментарі",
+                    "Різні відповіді залежно від контексту",
+                    "Підвищення engagement"
+                ],
+                image: "images/screenshot12.png"
+            },
+            {
+                id: 13,
+                title: "Шелест Telegram Bot (Книжки)",
+                category: "Контент-бот",
+                categories: ["bot"],
+                description: "Telegram-бот для пошуку та рекомендацій книг з збереженням даних у Google Sheets",
+                tech: ["Telegram", "Google Sheets", "Router", "Tools"],
+                complexity: "medium",
+                benefits: [
+                    "База даних книг в Google Sheets",
+                    "Пошук по різних критеріях",
+                    "Рекомендації для читачів"
+                ],
+                image: "images/screenshot13.png"
+            },
+            {
+                id: 14,
+                title: "Cafe Smile Order Bot (Telegram)",
+                category: "E-commerce бот",
+                categories: ["bot", "business"],
+                description: "Найскладніший проєкт! Повноцінний бот для замовлень у кафе з меню, кошиком, оплатою та інтеграцією з кухнею",
+                tech: ["Telegram", "Google Sheets", "Payment API", "Router", "Multiple Tools", "Webhooks"],
+                complexity: "advanced",
+                benefits: [
+                    "Повний цикл замовлення їжі",
+                    "Інтеграція з меню та складом",
+                    "Обробка платежів",
+                    "Сповіщення на кухню та клієнту",
+                    "50+ різних гілок сценаріїв"
+                ],
+                image: "images/screenshot14.png"
+            },
+            {
+                id: 15,
+                title: "ManyChat: Auto-DM при коментарях",
+                category: "Instagram автоматизація",
+                categories: ["social"],
+                description: "Автоматична відправка DM з посиланнями при певних ключових словах в коментарях Instagram",
+                tech: ["ManyChat", "Instagram", "Triggers", "Keywords"],
+                complexity: "basic",
+                benefits: [
+                    "Автоматизація лідогенерації",
+                    "Відповіді на тригери ('купити', 'придбати')",
+                    "Персоналізовані DM з посиланнями"
+                ],
+                image: "images/screenshot15.png"
+            },
+            {
+                id: 16,
+                title: "Додаток трекінгу звичок (Lovable)",
+                category: "Мобільний додаток",
+                categories: ["business"],
+                description: "Повноцінний мобільний додаток для формування корисних звичок з трекінгом прогресу та досягненнями",
+                tech: ["Lovable", "React", "UI/UX Design"],
+                complexity: "advanced",
+                benefits: [
+                    "Гарний сучасний інтерфейс",
+                    "Статистика прогресу",
+                    "Система досягнень",
+                    "Нагадування про звички"
+                ],
+                image: "images/screenshot16.png"
+            },
+            {
+                id: 17,
+                title: "Voiceflow: Chatbot E-commerce",
+                category: "Чат-бот схема",
+                categories: ["bot"],
+                description: "Детальна схема чат-бота для інтернет-магазину з обробкою замовлень, службою підтримки та системою оплати",
+                tech: ["Voiceflow", "Bot Logic", "E-commerce Flow"],
+                complexity: "advanced",
+                benefits: [
+                    "Візуалізація бізнес-логіки",
+                    "Складні діалогові сценарії",
+                    "Інтеграція з різними системами"
+                ],
+                image: "images/screenshot17.png"
+            },
+            {
+                id: 18,
+                title: "Chatbot Flow Diagram (Mermaid)",
+                category: "Процес-схема",
+                categories: ["business"],
+                description: "Професійна схема процесів обслуговування клієнтів з різними гілками рішень",
+                tech: ["Mermaid", "Process Design", "Flowchart"],
+                complexity: "medium",
+                benefits: [
+                    "Чітка структура процесів",
+                    "Легко зрозуміла логіка",
+                    "Документація для команди"
+                ],
+                image: "images/screenshot18.png"
+            }
+        ];
+
+        function renderProjects(filter = 'all') {
+            const grid = document.getElementById('projectsGrid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'all' 
+                ? projects 
+                : projects.filter(p => p.categories.includes(filter));
+
+            filtered.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.onclick = () => openModal(project);
+
+                const complexityClass = `complexity-${project.complexity}`;
+                const complexityText = {
+                    basic: 'Базовий',
+                    medium: 'Середній',
+                    advanced: 'Просунутий'
+                };
+
+                card.innerHTML = `
+                    <img src="${project.image}" alt="${project.title}" class="project-image" onerror="this.style.background='linear-gradient(135deg, #d1fae5, #a7f3d0)'">
+                    <div class="project-header">
+                        <div class="project-title">${project.title}</div>
+                        <div class="project-category">${project.category}</div>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">${project.description}</p>
+                        <div class="tech-stack">
+                            ${project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                        </div>
+                        <div class="project-benefits">
+                            ${project.benefits.map(b => `<div class="benefit-item">${b}</div>`).join('')}
+                        </div>
+                        <div class="complexity ${complexityClass}">
+                            Складність: ${complexityText[project.complexity]}
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function openModal(project) {
+            const modal = document.getElementById('projectModal');
+            const modalBody = document.getElementById('modalBody');
+
+            const complexityClass = `complexity-${project.complexity}`;
+            const complexityText = {
+                basic: 'Базовий',
+                medium: 'Середній',
+                advanced: 'Просунутий'
+            };
+
+            modalBody.innerHTML = `
+                <h2 style="color: #047857; margin-bottom: 10px;">${project.title}</h2>
+                <p style="color: #999; margin-bottom: 20px;">${project.category}</p>
+                
+                <img src="${project.image}" alt="${project.title}" class="modal-image">
+
+                <p style="font-size: 1.1em; margin-bottom: 20px; color: #555;">${project.description}</p>
+                
+                <h3 style="margin-top: 30px; margin-bottom: 15px; color: #047857;">🛠 Технологічний стек:</h3>
+                <div class="tech-stack">
+                    ${project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px; color: #047857;">✨ Ключові переваги:</h3>
+                <div class="project-benefits">
+                    ${project.benefits.map(b => `<div class="benefit-item">${b}</div>`).join('')}
+                </div>
+
+                <div class="complexity ${complexityClass}" style="margin-top: 20px;">
+                    Складність проєкту: ${complexityText[project.complexity]}
+                </div>
+            `;
+
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('projectModal').style.display = 'none';
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                renderProjects(this.dataset.filter);
+            });
+        });
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('projectModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Initial render
+        renderProjects();
+    </script>
+</body>
+</html>
