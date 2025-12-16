@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Portfolio - Palchikova</title>
+    <meta name="description" content="AI Automation Portfolio: Make.com, OpenAI, Telegram Bots, Voiceflow">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f0e8 0%, #e8d5b7 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(4, 120, 87, 0.15);
+            text-align: center;
+            position: relative;
+        }
+
+        /* Language Switcher - Inside Header */
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .lang-current {
+            background: rgba(4, 120, 87, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid rgba(4, 120, 87, 0.3);
+            cursor: pointer;
+            font-weight: 600;
+            color: #047857;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+
+        .lang-current:hover {
+            background: rgba(4, 120, 87, 0.15);
+            border-color: #047857;
+            transform: translateY(-2px);
+        }
+
+        .lang-menu {
+            display: none;
+            position: absolute;
+            top: 45px;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(4, 120, 87, 0.2);
+            overflow: hidden;
+            min-width: 100px;
+            border: 2px solid rgba(4, 120, 87, 0.1);
+        }
+
+        .lang-dropdown:hover .lang-menu {
+            display: block;
+        }
+
+        .lang-option {
+            padding: 10px 18px;
+            color: #666;
+            text-decoration: none;
+            display: block;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 0.9em;
+        }
+
+        .lang-option:hover {
+            background: #d1fae5;
+            color: #047857;
+        }
+
+        .lang-option.active {
+            background: #047857;
+            color: white;
+        }
+
+        .lang-option.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        h1 {
+            color: #047857;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: linear-gradient(135deg, #047857, #065f46);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(4, 120, 87, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #047857;
+            color: #047857;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #047857;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(4, 120, 87, 0.3);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(4, 120, 87, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(4, 120, 87, 0.2);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, #047857, #065f46);
+            color: white;
+            padding: 20px;
+        }
+
+        .project-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .project-category {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .project-body {
+            padding: 20px;
+        }
+
+        .project-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tech-tag {
+            background: #d1fae5;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            color: #065f46;
+            font-weight: 600;
+        }
+
+        .project-benefits {
+            background: #f5f0e8;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #047857;
+        }
+
+        .benefit-item {
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .benefit-item:before {
+            content: "✓ ";
+            color: #047857;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .benefit-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .complexity {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .complexity-basic {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .complexity-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .complexity-advanced {
+            background: #fed7aa;
+            color: #9a3412;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 1000px;
+            margin: 50px auto;
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2em;
+            cursor: pointer;
+            color: #999;
+            z-index: 10;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #047857;
+        }
+
+        .modal-image {
+            width: 100%;
+            max-height: 600px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 5px 20px rgba(4, 120, 87, 0.15);
+            background: #f5f0e8;
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(4, 120, 87, 0.1);
+        }
+
+        footer h3 {
+            color: #047857;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            color: #666;
+            margin-top: 15px;
+            line-height: 1.8;
+        }
+
+        .accent-text {
+            color: #d97706;
+            font-weight: 600;
+        }
+
+        .contact-email {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: #d1fae5;
+            color: #047857;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .contact-email:hover {
+            background: #047857;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(4, 120, 87, 0.3);
+        }
+
+        .demo-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 20px;
+            background: #d97706;
+            color: white;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .demo-button:hover {
+            background: #b45309;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(217, 119, 6, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .modal-content {
+                padding: 20px;
+                margin: 20px auto;
+            }
+
+            .modal-close {
+                top: 10px;
+                right: 15px;
+                font-size: 1.5em;
+            }
+
+            .language-switcher {
+                top: 15px;
+                right: 15px;
+            }
+
+            .lang-current {
+                padding: 6px 12px;
+                font-size: 0.85em;
+            }
+
+            header {
+                padding-top: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <!-- Language Switcher -->
+            <div class="language-switcher">
+                <div class="lang-dropdown">
+                    <div class="lang-current">
+                        🌐 <span>EN</span> ▼
+                    </div>
+                    <div class="lang-menu">
+                        <a href="index.html" class="lang-option">🇺🇦 UA</a>
+                        <a href="index-en.html" class="lang-option active">🇬🇧 EN</a>
+                        <a href="index-gr.html" class="lang-option disabled">🇬🇷 GR</a>
+                    </div>
+                </div>
+            </div>
+
+            <h1>🌿 AI Automation Portfolio</h1>
+            <p class="subtitle">Make.com • AI • Chatbots • Integrations</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">18</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Integrations</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">AI Projects</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            <button class="filter-btn" data-filter="ai">AI & OpenAI</button>
+            <button class="filter-btn" data-filter="bot">Chatbots</button>
+            <button class="filter-btn" data-filter="crm">CRM & HR</button>
+            <button class="filter-btn" data-filter="social">Social Media</button>
+            <button class="filter-btn" data-filter="business">Business Processes</button>
+        </div>
+
+        <div class="projects-grid" id="projectsGrid"></div>
+
+        <footer>
+            <h3>✨ Ready to help with your automation!</h3>
+            <p class="contact-info">
+                <span class="accent-text">Universal AI Automation Specialist</span><br>
+                Make.com • OpenAI • Telegram Bots • Voiceflow • ManyChat<br>
+                From idea to implementation 🚀
+            </p>
+            <a href="mailto:palchikovaolesya@gmail.com" class="contact-email">
+                ✉️ palchikovaolesya@gmail.com
+            </a>
+        </footer>
+    </div>
+
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const projects = [
+            {
+                id: 1,
+                title: "Agricultural Weather Monitoring",
+                category: "Business Processes",
+                categories: ["business"],
+                description: "Automatic collection of weather data with distribution across different tables for crop yield impact analysis",
+                tech: ["Weather API", "Google Sheets", "Router"],
+                complexity: "medium",
+                benefits: [
+                    "Daily automatic weather data collection",
+                    "Data distribution by categories via Router",
+                    "Weather impact analysis on agricultural operations"
+                ],
+                image: "images/screenshot1.png"
+            },
+            {
+                id: 2,
+                title: "Automatic Contract Generation",
+                category: "Document Management",
+                categories: ["business"],
+                description: "System for automatic contract generation from template when adding a new client to Google Sheets",
+                tech: ["Google Sheets", "Google Docs", "Templates"],
+                complexity: "basic",
+                benefits: [
+                    "Time savings on document creation",
+                    "Automatic filling from database",
+                    "Elimination of human errors"
+                ],
+                image: "images/screenshot2.png"
+            },
+            {
+                id: 3,
+                title: "Order Email Automation",
+                category: "Email Marketing",
+                categories: ["business"],
+                description: "Smart system for sending different types of emails to clients based on order status via Router",
+                tech: ["Google Sheets", "Gmail", "Router"],
+                complexity: "medium",
+                benefits: [
+                    "Personalized emails for each status",
+                    "Automatic client segmentation",
+                    "Sending 4+ different types of notifications"
+                ],
+                image: "images/screenshot3.png"
+            },
+            {
+                id: 4,
+                title: "Weekly Event Digest",
+                category: "Communications",
+                categories: ["business"],
+                description: "Automatic collection of events from Google Calendar and sending digest via email",
+                tech: ["Google Calendar", "Tools", "Gmail"],
+                complexity: "basic",
+                benefits: [
+                    "Automatic weekly event digest",
+                    "Event list formatting",
+                    "Team reminders"
+                ],
+                image: "images/screenshot4.png"
+            },
+            {
+                id: 5,
+                title: "HR: Employee Onboarding Survey",
+                category: "HR & Recruitment",
+                categories: ["crm"],
+                description: "Complete system from candidate survey to meeting creation and confirmation email sending",
+                tech: ["Google Forms", "Google Drive", "Google Docs", "Google Sheets", "Calendar", "Gmail"],
+                complexity: "advanced",
+                benefits: [
+                    "Full HR process automation",
+                    "Folder creation for each candidate",
+                    "Automatic documents and calendar events",
+                    "Email notifications for all participants"
+                ],
+                image: "images/screenshot5.png"
+            },
+            {
+                id: 6,
+                title: "AI Resume Analysis & Keywords",
+                category: "AI & HR",
+                categories: ["ai", "crm"],
+                description: "Using OpenAI to analyze resumes and automatically extract key skills and competencies",
+                tech: ["Google Sheets", "OpenAI GPT", "Text Analysis"],
+                complexity: "advanced",
+                benefits: [
+                    "Fast resume screening via AI",
+                    "Automatic keyword extraction",
+                    "Analysis storage in spreadsheet"
+                ],
+                image: "images/screenshot6.png"
+            },
+            {
+                id: 7,
+                title: "Restaurant Reviews with AI Analysis",
+                category: "Monitoring & AI",
+                categories: ["ai", "business"],
+                description: "Collection of restaurant reviews, analysis via OpenAI and sending reports to Slack",
+                tech: ["Google Sheets", "Iterator", "HTTP", "OpenAI", "Slack"],
+                complexity: "advanced",
+                benefits: [
+                    "Automatic review collection",
+                    "AI sentiment and issue analysis",
+                    "Instant Slack notifications",
+                    "Iteration through review list"
+                ],
+                image: "images/screenshot7.png"
+            },
+            {
+                id: 8,
+                title: "Google Maps: Route Distance Calculator",
+                category: "Logistics",
+                categories: ["business"],
+                description: "Automatic distance calculation between points for delivery optimization",
+                tech: ["Google Sheets", "Google Maps API"],
+                complexity: "basic",
+                benefits: [
+                    "Automatic km calculation",
+                    "Delivery route planning",
+                    "Logistics cost optimization"
+                ],
+                image: "images/screenshot8.png"
+            },
+            {
+                id: 9,
+                title: "RSS News Monitoring with AI",
+                category: "Content & AI",
+                categories: ["ai", "business"],
+                description: "RSS feed tracking, processing via OpenAI and saving important news to Google Sheets",
+                tech: ["RSS", "HTTP", "OpenAI", "Google Sheets"],
+                complexity: "medium",
+                benefits: [
+                    "Real-time news monitoring",
+                    "AI filtering of relevant content",
+                    "Automatic database storage"
+                ],
+                image: "images/screenshot9.png"
+            },
+            {
+                id: 10,
+                title: "AI Auto-Reply for Email",
+                category: "AI Email Assistant",
+                categories: ["ai"],
+                description: "Intelligent auto-replies to incoming emails via OpenAI with context analysis",
+                tech: ["Gmail", "Google Sheets", "OpenAI", "NLP"],
+                complexity: "advanced",
+                benefits: [
+                    "Smart context-based responses",
+                    "Order verification in database",
+                    "Personalized response generation"
+                ],
+                image: "images/screenshot10.png"
+            },
+            {
+                id: 11,
+                title: "Palchiks Finance Bot (Telegram)",
+                category: "Finance Bot",
+                categories: ["bot"],
+                description: "Complex Telegram bot for personal finance management with AI analytics and multiple integrations",
+                tech: ["Telegram", "OpenAI", "Google Sheets", "Router", "Multiple APIs"],
+                complexity: "advanced",
+                benefits: [
+                    "Income and expense tracking",
+                    "AI budget recommendations",
+                    "Multiple scenario branches",
+                    "Banking API integration"
+                ],
+                image: "images/screenshot11.png"
+            },
+            {
+                id: 12,
+                title: "Instagram: Auto-Reply to Comments",
+                category: "SMM Automation",
+                categories: ["social"],
+                description: "Automatic comment reply system for Instagram with smart routing via Router",
+                tech: ["Instagram API", "Router", "Keywords Detection"],
+                complexity: "medium",
+                benefits: [
+                    "Instant comment replies",
+                    "Context-based different responses",
+                    "Increased engagement"
+                ],
+                image: "images/screenshot12.png"
+            },
+            {
+                id: 13,
+                title: "Shelest Telegram Bot (Books)",
+                category: "Content Bot",
+                categories: ["bot"],
+                description: "Telegram bot for book search and recommendations with data storage in Google Sheets",
+                tech: ["Telegram", "Google Sheets", "Router", "Tools"],
+                complexity: "medium",
+                benefits: [
+                    "Book database in Google Sheets",
+                    "Search by various criteria",
+                    "Reader recommendations"
+                ],
+                image: "images/screenshot13.png"
+            },
+            {
+                id: 14,
+                title: "Cafe Smile Order Bot (Telegram)",
+                category: "E-commerce Bot",
+                categories: ["bot", "business"],
+                description: "Most complex project! Full-featured cafe ordering bot with menu, cart, payment and kitchen integration",
+                tech: ["Telegram", "Google Sheets", "Payment API", "Router", "Multiple Tools", "Webhooks"],
+                complexity: "advanced",
+                benefits: [
+                    "Complete food ordering cycle",
+                    "Menu and inventory integration",
+                    "Payment processing",
+                    "Kitchen and client notifications",
+                    "50+ different scenario branches"
+                ],
+                image: "images/screenshot14.png"
+            },
+            {
+                id: 15,
+                title: "ManyChat: Auto-DM on Comments",
+                category: "Instagram Automation",
+                categories: ["social"],
+                description: "Automatic DM sending with links when specific keywords appear in Instagram comments",
+                tech: ["ManyChat", "Instagram", "Triggers", "Keywords"],
+                complexity: "basic",
+                benefits: [
+                    "Lead generation automation",
+                    "Trigger responses ('buy', 'purchase')",
+                    "Personalized DMs with links"
+                ],
+                image: "images/screenshot15.png"
+            },
+            {
+                id: 16,
+                title: "Habit Tracking App (Lovable)",
+                category: "Mobile App",
+                categories: ["business"],
+                description: "Full-featured mobile app for building healthy habits with progress tracking and achievements",
+                tech: ["Lovable", "React", "UI/UX Design"],
+                complexity: "advanced",
+                benefits: [
+                    "Beautiful modern interface",
+                    "Progress statistics",
+                    "Achievement system",
+                    "Habit reminders"
+                ],
+                image: "images/screenshot16.png",
+                demo: "https://habit-life.lovable.app"
+            },
+            {
+                id: 17,
+                title: "Voiceflow: E-commerce Chatbot",
+                category: "Chatbot Schema",
+                categories: ["bot"],
+                description: "Detailed chatbot schema for e-commerce with order processing, customer support and payment system",
+                tech: ["Voiceflow", "Bot Logic", "E-commerce Flow"],
+                complexity: "advanced",
+                benefits: [
+                    "Business logic visualization",
+                    "Complex dialogue scenarios",
+                    "Integration with various systems"
+                ],
+                image: "images/screenshot17.png"
+            },
+            {
+                id: 18,
+                title: "Chatbot Flow Diagram (Mermaid)",
+                category: "Process Schema",
+                categories: ["business"],
+                description: "Professional customer service process schema with various decision branches",
+                tech: ["Mermaid", "Process Design", "Flowchart"],
+                complexity: "medium",
+                benefits: [
+                    "Clear process structure",
+                    "Easy-to-understand logic",
+                    "Team documentation"
+                ],
+                image: "images/screenshot18.png"
+            }
+        ];
+
+        function renderProjects(filter = 'all') {
+            const grid = document.getElementById('projectsGrid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'all' 
+                ? projects 
+                : projects.filter(p => p.categories.includes(filter));
+
+            filtered.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.onclick = () => openModal(project);
+
+                const complexityClass = `complexity-${project.complexity}`;
+                const complexityText = {
+                    basic: 'Basic',
+                    medium: 'Medium',
+                    advanced: 'Advanced'
+                };
+
+                card.innerHTML = `
+                    <img src="${project.image}" alt="${project.title}" class="project-image" onerror="this.style.background='linear-gradient(135deg, #d1fae5, #a7f3d0)'">
+                    <div class="project-header">
+                        <div class="project-title">${project.title}</div>
+                        <div class="project-category">${project.category}</div>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">${project.description}</p>
+                        <div class="tech-stack">
+                            ${project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                        </div>
+                        <div class="project-benefits">
+                            ${project.benefits.map(b => `<div class="benefit-item">${b}</div>`).join('')}
+                        </div>
+                        <div class="complexity ${complexityClass}">
+                            Complexity: ${complexityText[project.complexity]}
+                        </div>
+                        ${project.demo ? `<a href="${project.demo}" target="_blank" class="demo-button" onclick="event.stopPropagation()">🔗 Live Demo</a>` : ''}
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function openModal(project) {
+            const modal = document.getElementById('projectModal');
+            const modalBody = document.getElementById('modalBody');
+
+            const complexityClass = `complexity-${project.complexity}`;
+            const complexityText = {
+                basic: 'Basic',
+                medium: 'Medium',
+                advanced: 'Advanced'
+            };
+
+            modalBody.innerHTML = `
+                <h2 style="color: #047857; margin-bottom: 10px;">${project.title}</h2>
+                <p style="color: #999; margin-bottom: 20px;">${project.category}</p>
+                
+                ${project.demo ? `<a href="${project.demo}" target="_blank" class="demo-button" style="display: inline-block; margin-bottom: 20px;">🔗 View Live Demo</a>` : ''}
+                
+                <img src="${project.image}" alt="${project.title}" class="modal-image">
+
+                <p style="font-size: 1.1em; margin-bottom: 20px; color: #555;">${project.description}</p>
+                
+                <h3 style="margin-top: 30px; margin-bottom: 15px; color: #047857;">🛠 Tech Stack:</h3>
+                <div class="tech-stack">
+                    ${project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px; color: #047857;">✨ Key Benefits:</h3>
+                <div class="project-benefits">
+                    ${project.benefits.map(b => `<div class="benefit-item">${b}</div>`).join('')}
+                </div>
+
+                <div class="complexity ${complexityClass}" style="margin-top: 20px;">
+                    Project Complexity: ${complexityText[project.complexity]}
+                </div>
+            `;
+
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('projectModal').style.display = 'none';
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                renderProjects(this.dataset.filter);
+            });
+        });
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('projectModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Initial render
+        renderProjects();
+    </script>
+</body>
+</html>
