@@ -341,34 +341,64 @@
             top: 20px;
             right: 20px;
             z-index: 100;
+        }
+
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .lang-current {
             background: white;
             padding: 10px 20px;
             border-radius: 25px;
             box-shadow: 0 5px 15px rgba(4, 120, 87, 0.2);
-            display: flex;
-            gap: 10px;
-        }
-
-        .lang-btn {
-            background: none;
-            border: 2px solid transparent;
-            color: #666;
-            padding: 5px 15px;
-            border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
+            color: #047857;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             transition: all 0.3s;
-            text-decoration: none;
         }
 
-        .lang-btn:hover {
+        .lang-current:hover {
+            box-shadow: 0 8px 20px rgba(4, 120, 87, 0.3);
+        }
+
+        .lang-menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(4, 120, 87, 0.2);
+            overflow: hidden;
+            min-width: 100px;
+        }
+
+        .lang-dropdown:hover .lang-menu {
+            display: block;
+        }
+
+        .lang-option {
+            padding: 10px 20px;
+            color: #666;
+            text-decoration: none;
+            display: block;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .lang-option:hover {
+            background: #d1fae5;
             color: #047857;
         }
 
-        .lang-btn.active {
+        .lang-option.active {
             background: #047857;
             color: white;
-            border-color: #047857;
         }
         
         @media (max-width: 768px) {
@@ -399,7 +429,11 @@
             .language-switcher {
                 top: 10px;
                 right: 10px;
+            }
+
+            .lang-current {
                 padding: 8px 15px;
+                font-size: 0.9em;
             }
 
             header {
@@ -410,10 +444,16 @@
 </head>
 <body>
     <div class="language-switcher">
-        <a href="index.html" class="lang-btn active">🇺🇦 UA</a>
-        <a href="index-en.html" class="lang-btn">🇬🇧 EN</a>
+        <div class="lang-dropdown">
+            <div class="lang-current">
+                🌐 <span>UA</span> ▼
+            </div>
+            <div class="lang-menu">
+                <a href="index.html" class="lang-option active">🇺🇦 UA</a>
+                <a href="index-en.html" class="lang-option">🇬🇧 EN</a>
+            </div>
+        </div>
     </div>
-    <div class="container">
         <header>
             <h1>🌿 Портфоліо AI-автоматизацій</h1>
             <p class="subtitle">Make.com • AI • Chatbots • Integrations</p>
