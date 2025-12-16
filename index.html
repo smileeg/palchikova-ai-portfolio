@@ -33,6 +33,77 @@
             margin-bottom: 30px;
             box-shadow: 0 10px 40px rgba(4, 120, 87, 0.15);
             text-align: center;
+            position: relative;
+        }
+
+        /* Language Switcher - Inside Header */
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .lang-current {
+            background: rgba(4, 120, 87, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid rgba(4, 120, 87, 0.3);
+            cursor: pointer;
+            font-weight: 600;
+            color: #047857;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+
+        .lang-current:hover {
+            background: rgba(4, 120, 87, 0.15);
+            border-color: #047857;
+            transform: translateY(-2px);
+        }
+
+        .lang-menu {
+            display: none;
+            position: absolute;
+            top: 45px;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(4, 120, 87, 0.2);
+            overflow: hidden;
+            min-width: 100px;
+            border: 2px solid rgba(4, 120, 87, 0.1);
+        }
+
+        .lang-dropdown:hover .lang-menu {
+            display: block;
+        }
+
+        .lang-option {
+            padding: 10px 18px;
+            color: #666;
+            text-decoration: none;
+            display: block;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 0.9em;
+        }
+
+        .lang-option:hover {
+            background: #d1fae5;
+            color: #047857;
+        }
+
+        .lang-option.active {
+            background: #047857;
+            color: white;
         }
 
         h1 {
@@ -335,74 +406,6 @@
             box-shadow: 0 5px 15px rgba(217, 119, 6, 0.3);
         }
 
-        .language-switcher {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-        }
-
-        .lang-dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .lang-current {
-            background: rgba(255, 255, 255, 0.7);
-            padding: 6px 12px;
-            border-radius: 15px;
-            border: 1px solid rgba(4, 120, 87, 0.2);
-            cursor: pointer;
-            font-weight: 600;
-            color: #047857;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s;
-            font-size: 0.85em;
-        }
-
-        .lang-current:hover {
-            background: white;
-            border-color: #047857;
-            box-shadow: 0 3px 10px rgba(4, 120, 87, 0.15);
-        }
-
-        .lang-menu {
-            display: none;
-            position: absolute;
-            top: 35px;
-            right: 0;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(4, 120, 87, 0.2);
-            overflow: hidden;
-            min-width: 80px;
-        }
-
-        .lang-dropdown:hover .lang-menu {
-            display: block;
-        }
-
-        .lang-option {
-            padding: 8px 15px;
-            color: #666;
-            text-decoration: none;
-            display: block;
-            font-weight: 600;
-            transition: all 0.3s;
-            font-size: 0.85em;
-        }
-
-        .lang-option:hover {
-            background: #d1fae5;
-            color: #047857;
-        }
-
-        .lang-option.active {
-            background: #047857;
-            color: white;
-        }
-        
         @media (max-width: 768px) {
             h1 {
                 font-size: 1.8em;
@@ -429,34 +432,37 @@
             }
 
             .language-switcher {
-                top: 10px;
-                right: 10px;
+                top: 15px;
+                right: 15px;
             }
 
             .lang-current {
-                padding: 5px 10px;
-                font-size: 0.8em;
+                padding: 6px 12px;
+                font-size: 0.85em;
             }
 
             header {
-                padding: 40px 100px 40px 20px;
+                padding-top: 60px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="language-switcher">
-        <div class="lang-dropdown">
-            <div class="lang-current">
-                🌐 <span>UA</span> ▼
-            </div>
-            <div class="lang-menu">
-                <a href="index.html" class="lang-option active">🇺🇦 UA</a>
-                <a href="index-en.html" class="lang-option">🇬🇧 EN</a>
-            </div>
-        </div>
-    </div>
+    <div class="container">
         <header>
+            <!-- Language Switcher -->
+            <div class="language-switcher">
+                <div class="lang-dropdown">
+                    <div class="lang-current">
+                        🌐 <span>UA</span> ▼
+                    </div>
+                    <div class="lang-menu">
+                        <a href="index.html" class="lang-option active">🇺🇦 UA</a>
+                        <a href="index-en.html" class="lang-option">🇬🇧 EN</a>
+                    </div>
+                </div>
+            </div>
+
             <h1>🌿 Портфоліо AI-автоматизацій</h1>
             <p class="subtitle">Make.com • AI • Chatbots • Integrations</p>
             <div class="stats">
